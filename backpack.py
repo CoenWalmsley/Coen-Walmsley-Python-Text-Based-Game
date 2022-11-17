@@ -6,8 +6,8 @@ class BackPack:
 
     ToDo: [X] Instantiate backpack
     ToDo: [X] Add Item
-    ToDo: [ ] Remove Item
-    ToDo: [ ] List Items
+    ToDo: [X] Remove Item
+    ToDo: [X] List Items (in main file)
     ToDo: [X] Count items
     ToDo: [ ] in backpack (Search for Item - Student to do)
     ToDo: [X] Sort Items
@@ -18,7 +18,7 @@ class BackPack:
         self._backpack = []
         if items is None:
             items = []
-        if type(items) is not "<class 'list'>":
+        if type(items) != "<class 'list'>":
             items = []
         for item in items:
             self._backpack.append(item)
@@ -28,10 +28,10 @@ class BackPack:
         self._backpack.sort()
 
     def count(self):
-        return self._backpack.count()
+        return self._backpack.count(self._backpack)
 
     def list(self):
-        pass
+        print(self._backpack)
 
     def add(self, item):
         if item is not None:
@@ -47,3 +47,8 @@ class BackPack:
         :return: -1 | False | integer
         """
         return None
+
+    def remove(self, item):
+        if item is not None:
+            self._backpack.pop(item)
+            self.sort()

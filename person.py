@@ -1,4 +1,4 @@
-from object import Object
+from backpack import BackPack
 class Person:
     def __init__(self, character_name, room_location, is_murderer, character_statement, character_response):
         self.character_name = character_name
@@ -8,7 +8,7 @@ class Person:
         self.character_response = character_response
 
     def accuse_character(self):
-        if self.is_murderer & "Ring" in Object.inventory:
+        if self.is_murderer & "Ring" in BackPack.list():
             print(self.character_response)
             print("Congratulations, you have solved the murder mystery!")
             quit()
