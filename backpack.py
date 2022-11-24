@@ -1,4 +1,4 @@
-from object import Object
+import object
 
 
 class BackPack:
@@ -12,12 +12,17 @@ class BackPack:
     ToDo: [X] Remove Item
     ToDo: [X] List Items (in main file)
     ToDo: [X] Count items
-    ToDo: [ ] in backpack (Search for Item - Student to do)
+    ToDo: [X] in backpack
     ToDo: [X] Sort Items
 
     """
 
     def __init__(self, backpack_contents, object_name):
+        """
+
+        :param backpack_contents: List of the content's in the backpack (list of the object instances once collected)
+        :param object_name:  The name of the objects in the backpack
+        """
         self.object_name = object_name
         self.backpack_contents = backpack_contents
         for self.object_name in self.backpack_contents:
@@ -39,11 +44,28 @@ class BackPack:
 
     def search_in_backpack(self):
         """
-        Complete this method using a binary search
-        returns -1 or False if not found
-        returns position if found
         :return: -1 | False | integer
         """
+
+        def binary_search(arr, min, max, value):
+            if max >= min:
+                middle_value = (max + min) // 2
+                if arr[middle_value] == value:
+                    return middle_value
+                elif arr[middle_value] > value:
+                    return binary_search(arr, min, max - 1, value)
+                else:
+                    return binary_search(arr, middle_value + 1, max, value)
+
+            else:
+                return -1
+
+        search_result = binary_search(self.backpack_contents, 0, len(self.backpack_contents) - 1, object.Object)
+        if search_result != -1:
+            print("Element is present at index", str(search_result))
+        else:
+            print("Element is not present in array")
+
         return self.object_name
 
     def remove(self):

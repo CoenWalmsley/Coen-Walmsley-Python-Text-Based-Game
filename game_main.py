@@ -34,7 +34,7 @@ room.bar.room_object_person_placement(corkscrew, None)
 razor = Object("Razor", room.bathroom)
 room.bathroom.room_object_person_placement(razor, None)
 ring = Object("Ring", room.beach)
-room.beach.room_mapping(ring, None)
+room.beach.room_object_person_placement(ring, None)
 
 
 def game():
@@ -70,9 +70,7 @@ def game():
                 current_room.move_room(user_input)
                 rooms_visited.append(current_room.name)
                 current_room = current_room.north
-                print(f"You can visit either the {current_room.north.name} in the North, the {current_room.south.name} "
-                      f"in the South,\n" f"the {current_room.east.name} in the East, and the {current_room.west.name} "
-                      f"in the West.")
+                current_room.show_surrounding_rooms()
             else:
                 print("You've entered a forbidden area, you'll be sent back to the main entrance.")
                 current_room = room.main_entrance
@@ -82,6 +80,7 @@ def game():
                 current_room.move_room(user_input)
                 rooms_visited.append(current_room.name)
                 current_room = current_room.south
+                current_room.show_surrounding_rooms()
             else:
                 print("You've entered a forbidden area, you'll be sent back to the main entrance.")
                 current_room = room.main_entrance
@@ -91,6 +90,7 @@ def game():
                 current_room.move_room(user_input)
                 rooms_visited.append(current_room.name)
                 current_room = current_room.east
+                current_room.show_surrounding_rooms()
             else:
                 print("You've entered a forbidden area, you'll be sent back to the main entrance.")
                 current_room = room.main_entrance
@@ -100,6 +100,7 @@ def game():
                 current_room.move_room(user_input)
                 rooms_visited.append(current_room.name)
                 current_room = current_room.west
+                current_room.show_surrounding_rooms()
             else:
                 print("You've entered a forbidden area, you'll be sent back to the main entrance.")
                 current_room = room.main_entrance
@@ -119,7 +120,11 @@ def game():
         elif user_input == "Q":
             print("Thanks for playing.")
             quit()
-
+        elif user_input == "H":
+            print("Press L to look around,press G to collect any objects and press I to access inventory.\n"
+                  "To move around, press N to go North, " "S to go South, W to go West and E to go East.\n"""
+                  "To talk to a character, press T, and to accuse a character to win the game," "press A.\n"
+                  "You can see the rooms you have visited by pressing R, and to quit anytime, press Q.")
         else:
             print("Invalid move, please try again!")
             continue
