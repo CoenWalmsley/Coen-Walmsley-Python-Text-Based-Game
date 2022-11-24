@@ -1,75 +1,85 @@
 class Room:
-    def __init__(self, name, room_number, object_in_room=False, person_in_room=False):
+    def __init__(self, name, room_number, _object=None, person=None, north=None, south=None, east=None, west=None):
         """
 
-        :param name: The name of the room.
-        :param room_number: The number of the room on the map.
-        :param object_in_room: Boolean value of whether there is an object in the room or not.
-        :param person_in_room: Boolean value of whether there is a person in the room or not.
+        :param name:
+        :param room_number:
+        :param _object:
+        :param person:
+        :param north:
+        :param south:
+        :param east:
+        :param west:
         """
         self.name = name
         self.room_number = room_number
-        self.object_in_room = object_in_room
-        self.person_in_room = person_in_room
+        self._object = _object
+        self.person = person
+        self.north = north
+        self.south = south
+        self.east = east
+        self.west = west
 
     def look_around_room(self):
-        if self.object_in_room is True:
-            print(f"In this room, you've spotted an object, press G to grab.")
-            self.object_in_room = False
-        if self.person_in_room:
-            print(f"You found someone, press T to talk to them.")
-        else:
-            print("There are no objects in this room.")
+        if self._object is not None:
+            if self.person is None:
+                print("In this room, you've spotted an object, press G to grab.")
+                print("In this room, there are no people.")
+            else:
+                print("In this room, you've spotted an object, press G to grab.")
+                print("You found someone, press T to talk to them.")
 
+        elif self._object is None:
+            if self.person is not None:
+                print("You found someone, press T to talk to them.")
+                print("In this room, there are no objects.")
+            else:
+                print("In this room, there are no objects or people.")
 
-class RoomMapping(Room):
-    def __init__(self, north_room, south_room, east_room, west_room, object, person, name, room_number):
-        super().__init__(name, room_number)
-        self.north_room = north_room
-        self.south_room = south_room
-        self.east_room = east_room
-        self.west_room = west_room
-        self.object= object
+    def room_mapping(self, north_room=None, south_room=None, east_room=None, west_room=None):
+        """
+
+        :param north_room: The room closest to the North of the current room.
+        :param south_room: The room closest to the South of the current room.
+        :param east_room: The room closest to the east of the current room.
+        :param west_room: The room closest to the west of the current room.
+        """
+        self.north = north_room
+        self.south = south_room
+        self.east = east_room
+        self.west = west_room
+
+    def room_object_person_placement(self, _object, person):
+        """
+
+        :param _object:
+        :param person:
+        :return:
+        """
+        self._object = _object
         self.person = person
 
-    def move_room(self):
-        user_input = input("Enter your next move: ")
+    def move_room(self, user_input):
         if user_input == "N":
-            north_room = self.north_room
-            if north_room is not None:
-                current_room = north_room
-                print(f"You are now in {current_room.name}.")
-                return current_room
+            if self.north is not None:
+                print(f"You are now in {self.north.name}.")
             else:
                 print("No room found, please travel another direction.")
-                return
         elif user_input == "S":
-            south_room = self.south_room
-            if south_room is not None:
-                current_room = south_room
-                print(f"You are now in {current_room.name}.")
-                return current_room
+            if self.south is not None:
+                print(f"You are now in {self.south.name}.")
             else:
                 print("No room found, please travel another direction.")
-                return
         elif user_input == "E":
-            east_room = self.east_room
-            if east_room is not None:
-                current_room = east_room
-                print(f"You are now in {current_room.name}.")
-                return current_room
+            if self.east is not None:
+                print(f"You are now in {self.east.name}.")
             else:
                 print("No room found, please travel another direction.")
-                return
         elif user_input == "W":
-            west_room = self.west_room
-            if west_room is not None:
-                current_room = west_room
-                print(f"You are now in {current_room.name}.")
-                return current_room
+            if self.west is not None:
+                print(f"You are now in {self.west.name}.")
             else:
                 print("No room found, please travel another direction.")
-                return
 
 
 main_entrance = Room("Main Entrance", 0, True, False)
@@ -85,3 +95,18 @@ courtyard = Room("Courtyard", 9, True, False)
 bar = Room("Bar", 10, True, False)
 bathroom = Room("Bathroom", 11, True, False)
 beach = Room("Beach", 12, True, False)
+
+
+main_entrance.room_mapping(lobby, None, None, None)
+lobby.room_mapping(living, main_entrance, bedroom_one, dining)
+bedroom_one.room_mapping(None, None, ensuite, lobby)
+ensuite.room_mapping(None, None, None, bedroom_one)
+dining.room_mapping(kitchen, None, lobby, bedroom_two)
+bedroom_two.room_mapping(None, None, dining, None)
+living.room_mapping(bar, lobby, courtyard, kitchen)
+kitchen.room_mapping(None, dining, living, butler_quarters)
+butler_quarters.room_mapping(None, None, kitchen, None)
+courtyard.room_mapping(beach, None, None, living)
+bar.room_mapping(bathroom, living, None, None)
+bathroom.room_mapping(None, bar, None, None)
+beach.room_mapping(None, courtyard, None, None)

@@ -1,3 +1,6 @@
+from object import Object
+
+
 class BackPack:
     """
     BackPack Class
@@ -14,41 +17,36 @@ class BackPack:
 
     """
 
-    def __init__(self, items):
-        self._backpack = []
-        if items is None:
-            items = []
-        if type(items) != "<class 'list'>":
-            items = []
-        for item in items:
-            self._backpack.append(item)
-        self.sort()
+    def __init__(self, backpack_contents, object_name):
+        self.object_name = object_name
+        self.backpack_contents = backpack_contents
+        for self.object_name in self.backpack_contents:
+            self.backpack_contents.append(self.object_name)
 
-    def sort(self):
-        self._backpack.sort()
+    def organise(self):
+        self.backpack_contents.sort()
 
     def count(self):
-        return self._backpack.count(self._backpack)
+        return self.backpack_contents.count()
 
     def list(self):
-        print(self._backpack)
+        print(self.backpack_contents)
 
-    def add(self, item):
-        if item is not None:
-            self._backpack.append(item)
-            self.sort()
+    def add(self):
+        if self.object_name is not None:
+            self.backpack_contents.append(self.object_name)
+            self.organise()
 
-    def in_backpack(self, item):
+    def search_in_backpack(self):
         """
         Complete this method using a binary search
         returns -1 or False if not found
         returns position if found
-        :param item:
         :return: -1 | False | integer
         """
-        return None
+        return self.object_name
 
-    def remove(self, item):
-        if item is not None:
-            self._backpack.pop(item)
-            self.sort()
+    def remove(self):
+        if self.object_name is not None:
+            self.backpack_contents.pop(self.object_name)
+            self.organise()

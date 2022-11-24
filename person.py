@@ -1,4 +1,6 @@
 from backpack import BackPack
+
+
 class Person:
     def __init__(self, character_name, room_location, is_murderer, character_statement, character_response):
         self.character_name = character_name
@@ -18,5 +20,8 @@ class Person:
             quit()
 
     def talk_to_character(self):
-        print(self.character_statement)
-        return
+        if self is not None:
+            print(self.character_statement)
+            return
+        else:
+            print("No one to talk too!")
