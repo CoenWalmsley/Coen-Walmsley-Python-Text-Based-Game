@@ -38,6 +38,7 @@ room.beach.room_mapping(ring, None)
 
 
 def game():
+
     rooms_visited = []
     current_room = room.main_entrance
     inventory = BackPack(backpack_contents=[], object_name=current_room._object.object_name)
@@ -69,9 +70,9 @@ def game():
                 current_room.move_room(user_input)
                 rooms_visited.append(current_room.name)
                 current_room = current_room.north
-                print(f"The surrounding rooms are {current_room.north.name} to the North, "
-                      f"{current_room.south.name} to the South\n", f"{current_room.east.name} to the East, "
-                      f"and {current_room.west.name} to the West.")
+                print(f"You can visit either the {current_room.north.name} in the North, the {current_room.south.name} "
+                      f"in the South,\n" f"the {current_room.east.name} in the East, and the {current_room.west.name} "
+                      f"in the West.")
             else:
                 print("You've entered a forbidden area, you'll be sent back to the main entrance.")
                 current_room = room.main_entrance
